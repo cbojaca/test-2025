@@ -49,12 +49,12 @@ const StyledTable = styled.table`
 
   tbody {
     border: 1px solid #cfcfcf;
-  }
 
-  tr {
-    cursor: pointer;
-    &:hover {
-      background-color: rgb(235, 235, 235);
+    tr {
+      cursor: pointer;
+      &:hover {
+        background-color: rgb(235, 235, 235);
+      }
     }
   }
 `;
@@ -62,7 +62,7 @@ const StyledTable = styled.table`
 const TableDownloadHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin: 10px;
 `;
 
 const StyledTh = styled.th`
@@ -88,6 +88,10 @@ const StatusContainer = styled.div`
 const CheckboxContainer = styled.td`
   padding: 8px;
   text-align: center;
+  border: 1px solid #cfcfcf;
+`;
+
+const TableHeader = styled.tr`
   border: 1px solid #cfcfcf;
 `;
 
@@ -124,28 +128,35 @@ export function CrowdstrikeTable({ data, columns }: CrowdstriketableProps) {
     }
   }, [data, selectedRows.size]);
 
+  const capitalizeFirstLetter = (status: string) => {
+    return status.charAt(0).toUpperCase() + status.slice(1);
+  };
+
   return (
     <TableContainer>
-      <TableDownloadHeader>
-        <DownloadButton
-          disabled={!isDownloadAvailable}
-          onClick={onHandleDownload}
-        >
-          <DownloadImage src={downloadIcon} alt="Download" />
-          Dowload Selected
-        </DownloadButton>
-      </TableDownloadHeader>
-      <StyledTable>
+      <StyledTable data-testid="crowdstrike-table">
         <thead>
+          <TableHeader>
+            <TableDownloadHeader>
+              <DownloadButton
+                disabled={!isDownloadAvailable}
+                onClick={onHandleDownload}
+              >
+                <DownloadImage src={downloadIcon} alt="Download" />
+                Download Selected
+              </DownloadButton>
+            </TableDownloadHeader>
+          </TableHeader>
           <tr>
             <StyledTh>
               <input
                 ref={checkboxRef}
                 type="checkbox"
+                data-testid="crowdstrike-global-checkbox"
                 checked={selectedRows.size === data.length && data.length > 0}
                 onChange={handleSelectAll}
               />
-              <span>
+              <span data-testid="crowdstrike-selected-count">
                 Selected {selectedRowsCount > 0 ? selectedRowsCount : ""}
               </span>
             </StyledTh>
@@ -157,7 +168,7 @@ export function CrowdstrikeTable({ data, columns }: CrowdstriketableProps) {
         <tbody>
           {data.length > 0 ? (
             data.map((row, rowIndex) => (
-              <tr key={rowIndex}>
+              <tr key={rowIndex} data-testid="crowdstrike-row">
                 <CheckboxContainer>
                   <input
                     type="checkbox"
@@ -171,8 +182,10 @@ export function CrowdstrikeTable({ data, columns }: CrowdstriketableProps) {
                 <StyledTd>{row.path}</StyledTd>
                 <StyledTd>
                   <StatusContainer>
-                    {row.status === "available" && <AvailableCircle />}
-                    {row.status}
+                    {row.status === "available" && (
+                      <AvailableCircle data-testid="available-circle" />
+                    )}
+                    {capitalizeFirstLetter(row.status)}
                   </StatusContainer>
                 </StyledTd>
               </tr>

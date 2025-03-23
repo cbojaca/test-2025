@@ -42,7 +42,7 @@ export function useCrowdstrikeTable({data}: UseCrowdstrikeTableProps
 
 
       const onHandleDownload = useCallback(() => {
-        const selectedPaths = filteredData.map((row) => row.path).join("\n");
+        const selectedPaths = filteredData.filter(f => f.status === "available").map((row) => row.path).join("\n");
         alert(`Downloading: ${selectedPaths}`);
       }, [filteredData]);
 
