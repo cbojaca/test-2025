@@ -49,6 +49,24 @@ The work was divided into two working sessions (2 hours each) to complete the pr
    - Implemented the table functionalities and styling.
 
 2. **Second Work Session**
+
    - Developed the hook that will be in charge of managing the states.
    - Implemented some tests.
    - Refactored the code to add more flexibility.
+
+   # Test-2025 Git Bundle
+
+## How to Clone the Repository from the Bundle
+
+To use this bundle, run:
+
+```sh
+git clone test-2025.bundle test-2025
+cd test-2025
+```
+
+### **Final Deliverables**
+
+- `test-2025.bundle` (Git bundle file)
+- `README.md` (Instructions for usage)
+- A [(Google Drive)](https://drive.google.com/drive/folders/1glat3f5kE0CfmWPZMYwsC_en1BHlDttE?usp=drive_link) link is provided for the project bundle.
